@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="PG Store - A melhor loja de tecnologia e games. PC Gamer, Celulares, Xbox, PlayStation com preços imperdíveis. Pague via Pix com PagBank.">
+    <meta name="keywords" content="PG Store, PC Gamer, Celular, Xbox, PlayStation, infoprodutos, pagamento pix">
+    <meta name="author" content="PG Store">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://pgstore.com.br">
+    <title>PG Store | Tecnologia e Games</title>
+    <!-- Font Awesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <!-- QR Code Generator -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: #0a0c12;
+            color: #ededee;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scroll */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e1f2a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #7000ff;
+            border-radius: 10px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(10, 12, 18, 0.95);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(112, 0, 255, 0.3);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .logo h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #fff, #b477ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 800;
+        }
+        .logo span {
+            font-size: 0.8rem;
+            color: #b873ff;
+        }
+        .nav-icons {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .nav-icons button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: 0.2s;
+            position: relative;
+        }
+        .nav-icons button:hover {
+            color: #b873ff;
+            transform: scale(1.05);
+        }
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -12px;
+            background: #ff3366;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: bold;
+            border-radius: 30px;
+            padding: 2px 6px;
+            min-width: 18px;
+        }
+
+        /* Banner Hero */
+        .hero-banner {
+            background: linear-gradient(120deg, #0b0c15, #1a0c2e);
+            margin: 1.5rem 2rem;
+            border-radius: 2rem;
+            padding: 2.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid rgba(112,0,255,0.5);
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.5);
+        }
+        .hero-text h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+        }
+        .hero-text p {
+            font-size: 1.1rem;
+            margin: 0.8rem 0;
+            color: #ccc;
+        }
+        .hero-badge {
+            background: #ff3366;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            display: inline-block;
+            font-weight: bold;
+        }
+        .hero-cta button {
+            background: #7000ff;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 40px;
+            font-weight: bold;
+            font-size: 1rem;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .hero-cta button:hover {
+            background: #9147ff;
+            transform: translateY(-3px);
+        }
+
+        /* Produtos Grid */
+        .section-title {
+            font-size: 1.8rem;
+            margin: 2rem 2rem 1rem 2rem;
+            border-left: 6px solid #7000ff;
+            padding-left: 1rem;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.8rem;
+            margin: 1rem 2rem 3rem 2rem;
+        }
+        .product-card {
+            background: #11131f;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            transition: 0.25s ease;
+            border: 1px solid #25273a;
+            backdrop-filter: blur(4px);
+        }
+        .product-card:hover {
+            transform: translateY(-8px);
+            border-color: #7000ff;
+            box-shadow: 0 15px 30px -12px rgba(112,0,255,0.3);
+        }
+        .product-img {
+            background: #1a1c2c;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+        .product-info {
+            padding: 1.2rem;
+        }
+        .product-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        .price-row {
+            margin: 0.8rem 0;
+            display: flex;
+            align-items: baseline;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .old-price {
+            text-decoration: line-through;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        .current-price {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #22dd88;
+        }
+        .discount-badge {
+            background: #ff3366;
+            border-radius: 30px;
+            padding: 0.2rem 0.7rem;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        .btn-add {
+            width: 100%;
+            background: #7000ff;
+            border: none;
+            padding: 0.7rem;
+            border-radius: 2rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.5rem;
+        }
+        .btn-add:hover {
+            background: #9147ff;
+        }
+
+        /* Overlay e Sidebar (Carrinho) */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+            z-index: 200;
+            display: none;
+        }
+        .cart-sidebar {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 420px;
+            max-width: 90vw;
+            height: 100%;
+            background: #0f111c;
+            z-index: 201;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            transform: translateX(100%);
+            transition: 0.3s ease;
+            box-shadow: -5px 0 30px rgba(0,0,0,0.6);
+            border-left: 1px solid #7000ff;
+        }
+        .cart-sidebar.open {
+            transform: translateX(0);
+        }
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #2a2c3e;
+            padding: 0.8rem 0;
+        }
+        .cart-total {
+            margin-top: 1rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-top: 2px solid #7000ff;
+            padding-top: 1rem;
+        }
+        .btn-finalizar {
+            background: #22dd88;
+            border: none;
+            padding: 0.9rem;
+            border-radius: 3rem;
+            font-weight: bold;
+            margin-top: 1rem;
+            cursor: pointer;
+        }
+
+        /* Modal de Checkout/Pagamento */
+        .modal-checkout {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #11131f;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 2rem;
+            padding: 2rem;
+            z-index: 300;
+            display: none;
+            border: 1px solid #7000ff;
+            box-shadow: 0 30px 40px rgba(0,0,0,0.5);
+        }
+        .modal-checkout h3 {
+            margin-bottom: 1rem;
+        }
+        .modal-checkout input {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            background: #1e2030;
+            border: 1px solid #3a3d55;
+            border-radius: 1rem;
+            color: white;
+        }
+        .qr-area {
+            text-align: center;
+            margin-top: 1rem;
+            background: white;
+            padding: 1rem;
+            border-radius: 1rem;
+        }
+        #qrcode {
+            display: flex;
+            justify-content: center;
+        }
+        .status-pagamento {
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 400;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .admin-container {
+            background: #0f111c;
+            width: 95%;
+            max-width: 1200px;
+            max-height: 90%;
+            overflow-y: auto;
+            border-radius: 2rem;
+            padding: 1.5rem;
+            border: 2px solid #7000ff;
+        }
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+        }
+        .order-item, .product-edit-item {
+            background: #1a1c2c;
+            margin: 0.8rem 0;
+            padding: 1rem;
+            border-radius: 1rem;
+        }
+        button {
+            cursor: pointer;
+        }
+        .btn-danger {
+            background: #ff3366;
+        }
+        .close-btn {
+            background: #333;
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+        }
+        .toast-msg {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #22dd88;
+            color: #000;
+            padding: 0.8rem 1.5rem;
+            border-radius: 2rem;
+            z-index: 500;
+            font-weight: bold;
+            display: none;
+        }
+        @media (max-width: 720px) {
+            .hero-banner { flex-direction: column; text-align: center; gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="logo">
+        <h1>PG STORE</h1>
+        <span><i class="fas fa-bolt"></i> Tech & Games</span>
+    </div>
+    <div class="nav-icons">
+        <button id="cartIconBtn"><i class="fas fa-shopping-cart"></i><span id="cartCountBadge" class="cart-count">0</span></button>
+        <button id="adminIconBtn"><i class="fas fa-user-cog"></i></button>
+    </div>
+</div>
+
+<div class="hero-banner">
+    <div class="hero-text">
+        <span class="hero-badge"><i class="fas fa-tag"></i> MEGA OFERTAS PIX</span>
+        <h2>Até 75% OFF + Frete Grátis</h2>
+        <p>PC Gamer, Celulares, Xbox, PlayStation — tudo com pagamento seguro via <strong>PagBank Pix</strong>.</p>
+        <p><i class="fas fa-qrcode"></i> Pague com QR Code e receba na hora!</p>
+    </div>
+    <div class="hero-cta">
+        <button id="scrollToProducts"><i class="fas fa-gamepad"></i> Ver Produtos</button>
+    </div>
+</div>
+
+<h2 class="section-title"><i class="fas fa-microchip"></i> Promoções imperdíveis</h2>
+<div id="productsGrid" class="products-grid"></div>
+
+<!-- Sidebar Carrinho -->
+<div id="overlay" class="overlay"></div>
+<div id="cartSidebar" class="cart-sidebar">
+    <div class="cart-header">
+        <span>🛒 Meu Carrinho</span>
+        <button id="closeCartBtn" style="background: none; border: none; color:white; font-size: 1.5rem;"><i class="fas fa-times"></i></button>
+    </div>
+    <div id="cartItemsList" class="cart-items"></div>
+    <div id="cartTotal" class="cart-total">Total: R$ 0,00</div>
+    <button id="checkoutBtn" class="btn-finalizar">Finalizar Compra <i class="fab fa-pix"></i> PIX</button>
+</div>
+
+<!-- Modal Checkout Pagamento -->
+<div id="checkoutModal" class="modal-checkout">
+    <h3><i class="fab fa-pix"></i> Pagamento via PagBank (Pix)</h3>
+    <input type="text" id="customerName" placeholder="Seu nome completo" required>
+    <input type="email" id="customerEmail" placeholder="Seu e-mail">
+    <div id="qrPaymentArea" style="display: none;">
+        <div class="qr-area">
+            <div id="qrcode"></div>
+            <p id="pixCopiaECola" style="color:#333; word-break:break-all; font-size:12px; margin-top:10px;"></p>
+            <button id="copyPixBtn" class="btn-add" style="background:#22dd88; margin-top:5px;">Copiar código Pix</button>
+        </div>
+        <div class="status-pagamento" id="paymentStatusMsg">Aguardando confirmação (simulação).</div>
+        <button id="simulatePayBtn" class="btn-add" style="background:#7000ff; margin-top:10px;">✅ Simular Pagamento Aprovado (Admin)</button>
+    </div>
+    <button id="generatePixBtn" class="btn-add" style="background:#7000ff;">Gerar QR Code Pix</button>
+    <button id="closeCheckoutBtn" style="background:#444; margin-top:8px;" class="btn-add">Fechar</button>
+</div>
+
+<!-- Admin Dashboard -->
+<div id="adminPanel" class="admin-panel">
+    <div class="admin-container">
+        <div class="admin-header">
+            <h2><i class="fas fa-shield-alt"></i> Painel Administrativo PG Store</h2>
+            <button id="closeAdminBtn" class="close-btn">Fechar</button>
+        </div>
+        <div style="display:flex; gap:1rem; margin: 1rem 0; flex-wrap:wrap;">
+            <button id="showOrdersTab" class="btn-add" style="background:#7000ff;">Pedidos</button>
+            <button id="showProductsTab" class="btn-add" style="background:#22dd88;">Gerenciar Produtos</button>
+        </div>
+        <div id="adminOrdersArea"></div>
+        <div id="adminProductsArea" style="display:none;"></div>
+        <div style="margin-top:1rem; font-size:0.8rem; color:#aaa;">* Login automático (demo). Para segurança, senha padrão: admin123</div>
+    </div>
+</div>
+
+<div id="toastMsg" class="toast-msg"></div>
+
+<script>
+    // ---------- PRODUTOS PADRÃO (faixas de preço) ----------
+    const defaultProducts = [
+        { id: 1, name: "PC Gamer Ryzen 5", category: "PC", price: 4000, oldPrice: 5500, discount: 27, imgIcon: "🖥️" },
+        { id: 2, name: "PC Gamer Extreme i9", category: "PC", price: 23000, oldPrice: 27999, discount: 18, imgIcon: "💻" },
+        { id: 3, name: "Smartphone Galaxy A", category: "Celular", price: 1000, oldPrice: 1499, discount: 33, imgIcon: "📱" },
+        { id: 4, name: "iPhone 15 Pro", category: "Celular", price: 5000, oldPrice: 6999, discount: 28, imgIcon: "📱" },
+        { id: 5, name: "Xbox Series S", category: "Xbox", price: 900, oldPrice: 1299, discount: 31, imgIcon: "🎮" },
+        { id: 6, name: "Xbox Series X", category: "Xbox", price: 2000, oldPrice: 2850, discount: 30, imgIcon: "🎮" },
+        { id: 7, name: "PlayStation 4 Slim", category: "PlayStation", price: 300, oldPrice: 899, discount: 66, imgIcon: "🎮" },
+        { id: 8, name: "PlayStation 5 Pro", category: "PlayStation", price: 10000, oldPrice: 12499, discount: 20, imgIcon: "🎮" }
+    ];
+
+    let products = [];
+    let cart = []; // { id, quantity }
+    let orders = []; // pedidos
+    let adminLogged = false;
+    let currentTransactionOrderId = null; // para simular pagamento
+
+    // Load data from localStorage
+    function loadData() {
+        const storedProducts = localStorage.getItem("pgstore_products");
+        if(storedProducts) products = JSON.parse(storedProducts);
+        else products = [...defaultProducts];
+
+        const storedOrders = localStorage.getItem("pgstore_orders");
+        if(storedOrders) orders = JSON.parse(storedOrders);
+        else orders = [];
+
+        const storedCart = localStorage.getItem("pgstore_cart");
+        if(storedCart) cart = JSON.parse(storedCart);
+        else cart = [];
+        updateCartBadge();
+    }
+
+    function saveProducts() { localStorage.setItem("pgstore_products", JSON.stringify(products)); }
+    function saveOrders() { localStorage.setItem("pgstore_orders", JSON.stringify(orders)); }
+    function saveCart() { localStorage.setItem("pgstore_cart", JSON.stringify(cart)); updateCartBadge(); }
+
+    function updateCartBadge() {
+        const totalItems = cart.reduce((sum, i) => sum + i.quantity, 0);
+        document.getElementById("cartCountBadge").innerText = totalItems;
+    }
+
+    function renderProducts() {
+        const container = document.getElementById("productsGrid");
+        container.innerHTML = "";
+        products.forEach(prod => {
+            const card = document.createElement("div");
+            card.className = "product-card";
+            card.innerHTML = `
+                <div class="product-img">${prod.imgIcon || "📦"}</div>
+                <div class="product-info">
+                    <div class="product-title">${prod.name}</div>
+                    <div class="price-row">
+                        <span class="old-price">R$ ${prod.oldPrice.toFixed(2)}</span>
+                        <span class="current-price">R$ ${prod.price.toFixed(2)}</span>
+                        <span class="discount-badge">-${prod.discount}%</span>
+                    </div>
+                    <button class="btn-add" data-id="${prod.id}"><i class="fas fa-cart-plus"></i> Comprar</button>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+        document.querySelectorAll(".btn-add[data-id]").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                const id = parseInt(btn.getAttribute("data-id"));
+                addToCart(id);
+                showToast("Produto adicionado ao carrinho!");
+            });
+        });
+    }
+
+    function addToCart(productId) {
+        const existing = cart.find(item => item.id === productId);
+        if(existing) existing.quantity++;
+        else cart.push({ id: productId, quantity: 1 });
+        saveCart();
+        renderCartSidebar();
+        openCartSidebar();
+    }
+
+    function renderCartSidebar() {
+        const container = document.getElementById("cartItemsList");
+        if(!container) return;
+        let total = 0;
+        container.innerHTML = "";
+        for(let item of cart) {
+            const prod = products.find(p => p.id === item.id);
+            if(!prod) continue;
+            const subtotal = prod.price * item.quantity;
+            total += subtotal;
+            const div = document.createElement("div");
+            div.className = "cart-item";
+            div.innerHTML = `
+                <div><strong>${prod.name}</strong><br>R$ ${prod.price.toFixed(2)}</div>
+                <div style="display:flex; gap:10px; align-items:center;">
+                    <button class="qty-dec" data-id="${item.id}">-</button>
+                    <span>${item.quantity}</span>
+                    <button class="qty-inc" data-id="${item.id}">+</button>
+                    <button class="remove-item" data-id="${item.id}" style="color:#ff3366;"><i class="fas fa-trash"></i></button>
+                </div>
+            `;
+            container.appendChild(div);
+        }
+        document.getElementById("cartTotal").innerHTML = `Total: R$ ${total.toFixed(2)}`;
+        document.querySelectorAll(".qty-dec").forEach(btn => {
+            btn.addEventListener("click", (e) => { changeQuantity(parseInt(btn.dataset.id), -1); });
+        });
+        document.querySelectorAll(".qty-inc").forEach(btn => {
+            btn.addEventListener("click", (e) => { changeQuantity(parseInt(btn.dataset.id), 1); });
+        });
+        document.querySelectorAll(".remove-item").forEach(btn => {
+            btn.addEventListener("click", (e) => { removeCartItem(parseInt(btn.dataset.id)); });
+        });
+    }
+
+    function changeQuantity(id, delta) {
+        const idx = cart.findIndex(i => i.id === id);
+        if(idx !== -1) {
+            cart[idx].quantity += delta;
+            if(cart[idx].quantity <= 0) cart.splice(idx,1);
+            saveCart();
+            renderCartSidebar();
+        }
+    }
+    function removeCartItem(id) {
+        cart = cart.filter(i => i.id !== id);
+        saveCart();
+        renderCartSidebar();
+    }
+
+    // Simulação PagBank - gera QR Code com valor
+    async function generatePagBankPix(amount, description, orderId) {
+        // mock: gera uma chave pix ficticia
+        const txid = "PG_"+ Date.now() + "_" + Math.floor(Math.random()*10000);
+        const payload = `00020126580014BR.GOV.BCB.PIX0136pgstore@pagbank.com.br5204000053039865404${amount.toFixed(2)}5802BR5913PG Store Store6009SAO PAULO62070503***6304E0A3`;
+        // versão simplificada, mas funcional
+        const pixString = `00020126360014BR.GOV.BCB.PIX0114pgstore@pagbank.com.br5204000053039865404${amount.toFixed(2)}5802BR5913PG STORE6008BRASILIA62070503***63048D2C`;
+        return { qrCodeString: pixString, transactionId: txid };
+    }
+
+    let pendingOrder = null;
+    document.getElementById("checkoutBtn").addEventListener("click", () => {
+        if(cart.length === 0) { showToast("Carrinho vazio!"); return; }
+        const total = cart.reduce((sum, item) => sum + (products.find(p=>p.id===item.id).price * item.quantity),0);
+        document.getElementById("qrPaymentArea").style.display = "none";
+        document.getElementById("generatePixBtn").style.display = "block";
+        document.getElementById("checkoutModal").style.display = "block";
+        pendingOrder = { items: [...cart], total };
+    });
+
+    document.getElementById("generatePixBtn").addEventListener("click", async () => {
+        const nome = document.getElementById("customerName").value.trim();
+        if(!nome) { showToast("Digite seu nome"); return; }
+        if(cart.length === 0 || !pendingOrder) { showToast("Carrinho vazio"); return; }
+        const total = pendingOrder.total;
+        const pagamento = await generatePagBankPix(total, "Compra PG Store", null);
+        const newOrder = {
+            id: Date.now(),
+            clientName: nome,
+            clientEmail: document.getElementById("customerEmail").value,
+            items: pendingOrder.items.map(i => ({ id: i.id, name: products.find(p=>p.id===i.id).name, price: products.find(p=>p.id===i.id).price, quantity: i.quantity })),
+            total: total,
+            status: "Aguardando Pagamento",
+            transactionId: pagamento.transactionId,
+            createdAt: new Date().toISOString(),
+            pixCode: pagamento.qrCodeString
+        };
+        orders.push(newOrder);
+        saveOrders();
+        currentTransactionOrderId = newOrder.id;
+        //mostrar qr code
+        document.getElementById("qrPaymentArea").style.display = "block";
+        document.getElementById("generatePixBtn").style.display = "none";
+        const qrDiv = document.getElementById("qrcode");
+        qrDiv.innerHTML = "";
+        new QRCode(qrDiv, { text: pagamento.qrCodeString, width: 180, height: 180 });
+        document.getElementById("pixCopiaECola").innerText = pagamento.qrCodeString;
+        document.getElementById("paymentStatusMsg").innerHTML = "✅ Pix gerado! Realize o pagamento (simulação: clique no botão abaixo para aprovar)";
+        showToast("QR Code gerado! Finalize o pagamento.");
+    });
+
+    document.getElementById("copyPixBtn")?.addEventListener("click", () => {
+        const code = document.getElementById("pixCopiaECola")?.innerText;
+        if(code) { navigator.clipboard.writeText(code); showToast("Código Pix copiado!"); }
+    });
+
+    document.getElementById("simulatePayBtn")?.addEventListener("click", () => {
+        if(currentTransactionOrderId) {
+            const orderIndex = orders.findIndex(o => o.id === currentTransactionOrderId);
+            if(orderIndex !== -1 && orders[orderIndex].status === "Aguardando Pagamento") {
+                orders[orderIndex].status = "Pago (Confirmado)";
+                saveOrders();
+                document.getElementById("paymentStatusMsg").innerHTML = "✅ Pagamento APROVADO! Pedido confirmado.";
+                showToast("Pagamento simulado com sucesso!");
+                // limpar carrinho após pagamento confirmado
+                cart = [];
+                saveCart();
+                renderCartSidebar();
+                setTimeout(() => {
+                    document.getElementById("checkoutModal").style.display = "none";
+                    location.reload(); // refresh para limpar estado e atualizar admin
+                }, 1500);
+            } else { showToast("Pedido já processado"); }
+        } else { showToast("Nenhum pedido ativo"); }
+    });
+
+    document.getElementById("closeCheckoutBtn").addEventListener("click", () => {
+        document.getElementById("checkoutModal").style.display = "none";
+    });
+
+    // UI Carrinho
+    function openCartSidebar() { document.getElementById("overlay").style.display = "block"; document.getElementById("cartSidebar").classList.add("open"); }
+    function closeCartSidebar() { document.getElementById("overlay").style.display = "none"; document.getElementById("cartSidebar").classList.remove("open"); }
+    document.getElementById("cartIconBtn").addEventListener("click", openCartSidebar);
+    document.getElementById("closeCartBtn").addEventListener("click", closeCartSidebar);
+    document.getElementById("overlay").addEventListener("click", closeCartSidebar);
+
+    // Admin painel (login demo)
+    document.getElementById("adminIconBtn").addEventListener("click", () => {
+        const senha = prompt("🔐 Acesso Admin - Insira a senha:", "");
+        if(senha === "admin123") {
+            adminLogged = true;
+            document.getElementById("adminPanel").style.display = "flex";
+            renderAdminOrders();
+            renderAdminProducts();
+        } else if(senha !== null) { showToast("Senha incorreta!"); }
+    });
+    document.getElementById("closeAdminBtn").addEventListener("click", () => {
+        document.getElementById("adminPanel").style.display = "none";
+    });
+    function renderAdminOrders() {
+        const container = document.getElementById("adminOrdersArea");
+        container.innerHTML = "<h3>📦 Pedidos Registrados</h3>";
+        if(orders.length === 0) { container.innerHTML += "<p>Nenhum pedido ainda.</p>"; return; }
+        orders.forEach(order => {
+            const div = document.createElement("div");
+            div.className = "order-item";
+            div.innerHTML = `
+                <strong>#${order.id}</strong> - ${order.clientName} (${order.clientEmail || 'sem email'})<br>
+                Total: R$ ${order.total.toFixed(2)} | Status: ${order.status}<br>
+                Itens: ${order.items.map(i=>`${i.name} x${i.quantity}`).join(", ")}<br>
+                Transação PagBank: ${order.transactionId}<br>
+                <button class="change-status" data-id="${order.id}" style="background:#22dd88;">Marcar como Pago</button>
+            `;
+            container.appendChild(div);
+        });
+        document.querySelectorAll(".change-status").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                const id = parseInt(btn.dataset.id);
+                const ord = orders.find(o => o.id === id);
+                if(ord && ord.status !== "Pago (Confirmado)") {
+                    ord.status = "Pago (Confirmado)";
+                    saveOrders();
+                    renderAdminOrders();
+                    showToast("Status atualizado!");
+                } else showToast("Já está pago ou inválido");
+            });
+        });
+    }
+    function renderAdminProducts() {
+        const container = document.getElementById("adminProductsArea");
+        container.innerHTML = "<h3>✏️ Editar Produtos</h3><div style='display:flex;flex-wrap:wrap;gap:1rem;'></div>";
+        const grid = container.querySelector("div") || container;
+        products.forEach(prod => {
+            const prodDiv = document.createElement("div");
+            prodDiv.style.background = "#1e2030"; prodDiv.style.padding="1rem"; prodDiv.style.borderRadius="1rem"; prodDiv.style.minWidth="200px";
+            prodDiv.innerHTML = `
+                <strong>${prod.name}</strong><br>
+                Preço atual: R$ ${prod.price.toFixed(2)}<br>
+                <input type="number" id="newPrice_${prod.id}" placeholder="Novo preço" step="0.01" value="${prod.price}"><br>
+                <input type="text" id="newName_${prod.id}" placeholder="Novo nome" value="${prod.name}"><br>
+                <button class="saveProdBtn" data-id="${prod.id}">Salvar Alterações</button>
+            `;
+            container.appendChild(prodDiv);
+        });
+        document.querySelectorAll(".saveProdBtn").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                const id = parseInt(btn.dataset.id);
+                const newPrice = parseFloat(document.getElementById(`newPrice_${id}`).value);
+                const newName = document.getElementById(`newName_${id}`).value;
+                const pIndex = products.findIndex(p => p.id === id);
+                if(pIndex !== -1 && !isNaN(newPrice) && newPrice > 0) {
+                    products[pIndex].price = newPrice;
+                    if(newName.trim()) products[pIndex].name = newName;
+                    products[pIndex].oldPrice = newPrice * 1.25;
+                    products[pIndex].discount = Math.round((1 - newPrice/products[pIndex].oldPrice)*100);
+                    saveProducts();
+                    renderProducts();
+                    renderAdminProducts();
+                    showToast("Produto atualizado!");
+                } else showToast("Preço inválido");
+            });
+        });
+    }
+    document.getElementById("showOrdersTab").addEventListener("click", () => {
+        document.getElementById("adminOrdersArea").style.display = "block";
+        document.getElementById("adminProductsArea").style.display = "none";
+        renderAdminOrders();
+    });
+    document.getElementById("showProductsTab").addEventListener("click", () => {
+        document.getElementById("adminOrdersArea").style.display = "none";
+        document.getElementById("adminProductsArea").style.display = "block";
+        renderAdminProducts();
+    });
+    function showToast(msg) { const toast = document.getElementById("toastMsg"); toast.innerText = msg; toast.style.display = "block"; setTimeout(()=>{toast.style.display="none";},2500); }
+    document.getElementById("scrollToProducts").addEventListener("click", ()=>{ document.querySelector(".products-grid").scrollIntoView({behavior:"smooth"}); });
+
+    loadData();
+    renderProducts();
+    renderCartSidebar();
+    if(products.length && !localStorage.getItem("pgstore_products")) saveProducts();
+</script>
+</body>
+</html>
